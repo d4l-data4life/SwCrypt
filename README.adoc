@@ -112,15 +112,6 @@ let signature = try? D4L.RSAPSS.sign(data: data, privateKey: privateKey, saltTyp
 let isVerified = try? D4L.RSAPSS.verify(data: data, against: signature, publicKey: publicKey, saltType: .salted)
 ----
 
-=== Check availability
-
-Data4LifeCryptoRSAPSS in the unsalted version uses dlopen and dlsym to load the CommonCrypto's functions, because not all of them are available in public header files. You have to check the availability before using them.
-
-[source, swift]
-----
-let rsaAvailable : Bool = CC.RSA.available()
-----
-
 == Changelog
 
 See link:CHANGELOG.adoc[changelog]
