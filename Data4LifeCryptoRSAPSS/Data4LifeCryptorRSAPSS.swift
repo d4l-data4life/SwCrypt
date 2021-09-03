@@ -70,11 +70,11 @@ private extension D4L.RSAPSS {
             throw error
         }
 
-        guard let signedMessage = signedMessage else {
+        guard let signedData = signedMessage else {
             throw Data4LifeCryptoRSAPSSError.couldNotCreateSignature(error: nil)
         }
 
-        return signedMessage
+        return signedData
     }
 
     static func verifySalted(data: Data,
