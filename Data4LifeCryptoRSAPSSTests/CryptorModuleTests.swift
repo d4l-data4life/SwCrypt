@@ -17,9 +17,9 @@
 import XCTest
 @testable import Data4LifeCryptoRSAPSS
 
-class Data4LifeCryptoRSAPSSTests: XCTestCase {
+class CryptorModuleTests: XCTestCase {
 
-    private let keyPair = try? Data4LifeCryptoRSAPSSTests.createKeyPair(2048)
+    private let keyPair = try? CryptorModuleTests.createKeyPair(2048)
 
     override func setUp() {
         super.setUp()
@@ -69,7 +69,7 @@ class Data4LifeCryptoRSAPSSTests: XCTestCase {
     }
 
 	func signVerify(_ privKey: Data, pubKey:Data, padding: Cryptor.RSA.AsymmetricSAPadding) {
-		let testMessage = "rirararom_vagy_rararirom".data(using: String.Encoding.utf8)!
+		let testMessage = "Hello hello".data(using: String.Encoding.utf8)!
 		let sign = try? Cryptor.RSA.sign(testMessage, derKey: privKey, padding: padding,
 		                            digest: .sha256, saltLen: 16)
 		XCTAssert(sign != nil)

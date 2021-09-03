@@ -1,0 +1,148 @@
+= Data4Life Crypto RSA PSS iOS SDK
+:library_version: 1.0.0
+:doctype: article
+:!showtitle:
+:toc: macro
+:toclevels: 2
+:toc-title:
+:icons: font
+:imagesdir: assets/images
+:link-repository: https://github.com/d4l-data4life/d4l-crypto-rsa-pss-ios
+ifdef::env-github[]
+:warning-caption: :warning:
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+endif::[]
+
+++++
+<div align="center">
+    <p><!-- PROJECT LOGO -->
+        <a><img src="assets/images/d4l-logo.svg" width="150"/></a>
+    </p>
+    <p><!-- PROJECT TITLE -->
+        <h3>Data4Life Crypto RSA PSS iOS</h3>
+    </p>
+    <p><!-- PROJECT DESCRIPTION -->
+        Swift framework for handling all of the RSA PSS crypto operation for the Data4Life iOS frameworks.
+    </p>
+    <p><!-- PROJECT DOCUMENTATION -->
+        <a href="README.adoc"><strong>Explore the docs »</strong></a>
+    </p>
+    <p><!-- PROJECT ISSUES/FEATURES -->
+        <a href="https://github.com/d4l-data4life/d4l-crypto-rsa-pss-ios/issues">Report Bug</a>
+        ·
+        <a href="https://github.com/d4l-data4life/d4l-crypto-rsa-pss-ios/issues">Request Feature</a>
+    </p>
+    <p><!-- PROJECT BADGES see badges.adoc how to change them -->
+        <a href="https://github.com/d4l-data4life/d4l-crypto-rsa-pss-ios/releases">
+            <img src="assets/images/badge-release-latest.svg" alt="Latest version"/>
+        </a>
+        <a href="https://github.com/d4l-data4life/d4l-crypto-rsa-pss-ios/actions">
+            <img src="https://github.com/d4l-data4life/d4l-crypto-rsa-pss-ios/actions/workflows/pr-test.yml/badge.svg" alt="Build Status"/>
+        </a>
+        <a>
+            <img src="assets/images/badge-platform-support.svg" alt="Platform"/>
+        </a>
+        <a href="LICENSE">
+            <img src="assets/images/badge-license.svg" alt="License"/>
+        </a>
+    </p>
+</div>
+++++
+
+[discrete]
+=== Table Of Contents
+toc::[]
+
+== About The Project
+
+Swift framework for handling crypto RSA PSS operations for the Data4Life iOS frameworks.
+Forked from SwCrypt in order to use an unsalted version of sign/verify with RSA PSS, which is not native on iOS Platforms.
+Updated for swift 5.4, and changed to exist only as Swift Package.
+
+== Installation
+
+=== Swift Package Manager
+
+To install with Swift package manager, select your project’s Swift Packages tab, and add our repository url, either as ssh or https url:
+
+[source, terminal]
+----
+https://github.com/d4l-data4life/d4l-crypto-rsa-pss-ios.git
+----
+
+OR
+
+[source, terminal]
+----
+git@github.com:d4l-data4life/d4l-crypto-rsa-pss-ios.git
+----
+
+In the next step, select the latest version, and then import the `Data4LifeCryptoRSAPSS` framework in your target.
+
+== Features 
+
+=== Sign, verify data with RSA PSS
+
+Since it is intended only for our internal usage, sdk supports only 2 types of RSA PSS signing:
+
+* RSA PSS with digest SHA256 and salt length of 0 (unsalted):
+
+[source, swift]
+----
+let data: Data
+let privateKey: SecKey
+let publicKey: SecKey
+
+let signature = try? D4L.RSAPSS.sign(data: data, privateKey: privateKey, saltType: .unsalted)
+let isVerified = try? D4L.RSAPSS.verify(data: data, against: signature, publicKey: publicKey, saltType: .unsalted)
+----
+
+* RSA PSS with digest SHA256 and salt length of 32:
+
+[source, swift]
+----
+let data: Data
+let privateKey: SecKey
+let publicKey: SecKey
+
+let signature = try? D4L.RSAPSS.sign(data: data, privateKey: privateKey, saltType: .salted)
+let isVerified = try? D4L.RSAPSS.verify(data: data, against: signature, publicKey: publicKey, saltType: .salted)
+----
+
+=== Check availability
+
+Data4LifeCryptoRSAPSS in the unsalted version uses dlopen and dlsym to load the CommonCrypto's functions, because not all of them are available in public header files. You have to check the availability before using them.
+
+[source, swift]
+----
+let rsaAvailable : Bool = CC.RSA.available()
+----
+
+== Changelog
+
+See link:CHANGELOG.adoc[changelog]
+
+== Versioning
+
+We use http://semver.org/[Semantic Versioning] as a guideline for our versioning.
+
+Releases use this format: `{major}.{minor}.{patch}`
+
+* Breaking changes bump `{major}` and reset `{minor}` & `{patch}`
+* Backward compatible changes bump `{minor}` and reset `{patch}`
+* Bug fixes bump `{patch}`
+
+== Contributing
+
+You want to help or share a proposal? You have a specific problem? Read the following:
+
+* link:CODE-OF-CONDUCT.adoc[Code of conduct] for details on our code of conduct.
+* link:CONTRIBUTING.adoc[Contributing] for details about how to report bugs and propose features.
+* link:DEVELOPING.adoc[Developing] for details about our development process and how to build and test the project.
+
+== Copyright and License
+
+Copyright (c) 2021 D4L data4life gGmbH / All rights reserved. Please refer to our link:LICENSE[License] for further details.

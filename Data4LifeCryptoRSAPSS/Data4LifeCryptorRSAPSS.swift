@@ -16,9 +16,88 @@
 
 import Foundation
 
-public final class Data4LifeCryptorRSAPSS {
+public enum D4L {
+    public enum RSAPSS {
+        public static func sign(data: Data, privateKey: SecKey, saltType: SaltType) throws -> Data {
+            do {
+                switch saltType {
+                case .unsalted:
+                    return try signUnsalted(data: data, privateKey: privateKey)
+                case .salted:
+                    return try signSalted(data: data, privateKey: privateKey)
+                }
+            } catch {
+                throw Data4LifeCryptoRSAPSSError.couldNotCreateSignature(error: error)
+            }
+        }
 
-    public static func signUnsalted(data: Data, privateKey: SecKey) throws -> Data {
+        public static func verify(data: Data, against signature: Data, publicKey: SecKey, saltType: SaltType) throws -> Bool {
+            do {
+                switch saltType {
+                case .unsalted:
+                    return try verifyUnsalted(data: data, against: signature, publicKey: publicKey)
+                case .salted:
+                    return try verifySalted(data: data, against: signature, publicKey: publicKey)
+                }
+            } catch {
+                throw Data4LifeCryptoRSAPSSError.couldNotVerifySignature(error: error)
+            }
+        }
+    }
+}
+
+public enum SaltType: Int {
+    case unsalted  = 0
+    case salted = 32
+}
+
+public enum Data4LifeCryptoRSAPSSError: Error {
+    case couldNotCreateSignature(error: Error?)
+    case couldNotVerifySignature(error: Error?)
+}
+
+// MARK: Salted (using CommonCrypto)
+private extension D4L.RSAPSS {
+
+    static func signSalted(data: Data, privateKey: SecKey) throws -> Data {
+        var error: Unmanaged<CFError>?
+        let signedMessage = SecKeyCreateSignature(privateKey,
+                                                  .rsaSignatureMessagePSSSHA256,
+                                                  data as CFData,
+                                                  &error) as Data?
+
+        if let error = error?.takeRetainedValue() {
+            throw error
+        }
+
+        guard let signedMessage = signedMessage else {
+            throw Data4LifeCryptoRSAPSSError.couldNotCreateSignature(error: nil)
+        }
+
+        return signedMessage
+    }
+
+    static func verifySalted(data: Data,
+                             against signature: Data,
+                             publicKey: SecKey) throws -> Bool {
+        var error: Unmanaged<CFError>?
+        let isVerified = SecKeyVerifySignature(publicKey,
+                                               .rsaSignatureMessagePSSSHA256,
+                                               data as NSData,
+                                               signature as NSData,
+                                               &error)
+        if let error = error?.takeRetainedValue() {
+            throw Data4LifeCryptoRSAPSSError.couldNotVerifySignature(error: error)
+        }
+
+        return isVerified
+    }
+}
+
+// MARK: Unsalted (using SwCrypt)
+private extension D4L.RSAPSS {
+
+    static func signUnsalted(data: Data, privateKey: SecKey) throws -> Data {
         let keyString = """
             -----BEGIN PRIVATE KEY-----
             \(try privateKey.asBase64EncodedString())
@@ -33,9 +112,9 @@ public final class Data4LifeCryptorRSAPSS {
         return signature
     }
 
-    public static func verifyUnsalted(data: Data,
-                                      against signature: Data,
-                                      publicKey: SecKey) throws -> Bool {
+    static func verifyUnsalted(data: Data,
+                               against signature: Data,
+                               publicKey: SecKey) throws -> Bool {
         let keyString = """
             -----BEGIN KEY-----
             \(try publicKey.asBase64EncodedString())

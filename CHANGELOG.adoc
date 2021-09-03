@@ -1,0 +1,54 @@
+= Changelog
+:link-repository: https://github.com/d4l-data4life/d4l-crypto-rsa-pss-ios
+:doctype: article
+:toc: macro
+:toclevels: 1
+:toc-title:
+:icons: font
+:imagesdir: assets/images
+ifdef::env-github[]
+:warning-caption: :warning:
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+endif::[]
+
+All notable changes to this project will be documented in this file.
+
+The format is based on http://keepachangelog.com/en/1.0.0/[Keep a Changelog]
+and this project adheres to http://semver.org/spec/v2.0.0.html[Semantic Versioning].
+
+
+[discrete]
+==== Versions
+
+toc::[]
+
+== link:{link-repository}/releases/latest[Unreleased]
+
+See link:{link-repository}/compare/v1.0.0...main[changeset]
+
+=== Added
+
+=== Changed
+
+=== Removed
+
+=== Fixed
+
+=== Security
+
+=== Bumped
+
+=== Deprecated
+
+=== Migration
+
+
+== link:{link-repository}/releases/tag/v1.0.0[1.0.0]
+
+=== Added
+
+* Initial Release
+
