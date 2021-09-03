@@ -3,19 +3,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwCryptRSAPSS",
+    name: "Data4LifeCryptoRSAPSS",
+    platforms: [
+        .iOS(.v13),
+        .macOS(.v10_15)],
     products: [
-        .library(name: "SwCryptRSAPSS",
+        .library(name: "Data4LifeCryptoRSAPSS",
                  type: .static,
-                 targets: ["SwCryptRSAPSS"])
+                 targets: ["Data4LifeCryptoRSAPSS"])
     ],
     targets: [
-        .target(name: "SwCryptRSAPSS",
-                path: "SwCryptRSAPSS",
-                exclude: ["Info.plist"]),
-        .testTarget(name: "SwCryptRSAPSSTests",
-                    dependencies: ["SwCryptRSAPSS"],
-                    path: "SwCryptRSAPSSTests",
-                    exclude: ["Info.plist"])
+        .target(name: "Data4LifeCryptoRSAPSS",
+                path: "Data4LifeCryptoRSAPSS"),
+        .testTarget(name: "Data4LifeCryptoRSAPSSTests",
+                    dependencies: ["Data4LifeCryptoRSAPSS"],
+                    path: "Data4LifeCryptoRSAPSSTests")
     ]
 )

@@ -40,7 +40,7 @@ rYl/vFV+gqGGJPzR7EqiGw==
 """
 
     static let publicPEM = """
-        -----BEGIN PUBLIC KEY-----
+        -----BEGIN KEY-----
         MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvCchibsB/I9p2LTUyB2s
         FRFx6xaIGC2wcwixBvNHQ9yadc7naqsHWwK8rRiiMCjCVH5k2vp+eC+b28/xMKrF
         sXP1nLfEVEjebaZELyuE41oBSc7FkS79K7/ntYE30J+Hv0PiV1rm7BQSpWRTFxkc
@@ -48,7 +48,7 @@ rYl/vFV+gqGGJPzR7EqiGw==
         utBICZBeoFeRbaGDRGQECj7bMBkkpgGmS84qFVHkE7diAhScOJWX3NHUxh1ECL73
         NlMF59gN5guv68IuEOu1PgFVECqbvgJvDVyo3Mv9MFf91owa4i6wQF3L9r2v5RZi
         iwIDAQAB
-        -----END PUBLIC KEY-----
+        -----END KEY-----
         """
 
     static let privateEncryptedPEMAES128 = """
