@@ -14,7 +14,7 @@ extension Data {
     ///
     /// - returns: String representation of this Data object.
 
-    public func hexadecimalString() -> String {
+    func hexadecimalString() -> String {
         var hexstr = String()
         self.withUnsafeBytes {data in
             for i in UnsafeBufferPointer<UInt8>(start: data.baseAddress!.assumingMemoryBound(to: UInt8.self),
@@ -25,20 +25,20 @@ extension Data {
         return hexstr
     }
 
-    public func arrayOfBytes() -> [UInt8] {
+    func arrayOfBytes() -> [UInt8] {
         let count = self.count / MemoryLayout<UInt8>.size
         var bytesArray = [UInt8](repeating: 0, count: count)
         self.copyBytes(to: &bytesArray, count: count * MemoryLayout<UInt8>.size)
         return bytesArray
     }
 
-    fileprivate var bytesView: BytesView { return BytesView(self) }
+    var bytesView: BytesView { return BytesView(self) }
 
-    fileprivate func bytesViewRange(_ range: NSRange) -> BytesView {
+    func bytesViewRange(_ range: NSRange) -> BytesView {
         return BytesView(self, range: range)
     }
 
-    fileprivate struct BytesView: Collection {
+    struct BytesView: Collection {
         // The view retains the Data. That's on purpose.
         // Data doesn't retain the view, so there's no loop.
         let data: Data
@@ -65,10 +65,10 @@ extension Data {
         subscript (bounds: Range<Int>) -> Data {
             return data.subdata(in: bounds)
         }
-        fileprivate func formIndex(after i: inout Int) {
+        func formIndex(after i: inout Int) {
             i += 1
         }
-        fileprivate func index(after i: Int) -> Int {
+        func index(after i: Int) -> Int {
             return i + 1
         }
         var startIndex: Int

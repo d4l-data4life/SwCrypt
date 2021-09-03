@@ -22,7 +22,7 @@ extension String {
     /// - returns: Data represented by this hexadecimal string.
     ///            Returns nil if string contains characters outside the 0-9 and a-f range.
 
-    public func dataFromHexadecimalString() -> Data? {
+    func dataFromHexadecimalString() -> Data? {
         let trimmedString = self.trimmingCharacters(
             in: CharacterSet(charactersIn: "<> ")).replacingOccurrences(
                 of: " ", with: "")

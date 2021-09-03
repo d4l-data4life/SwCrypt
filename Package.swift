@@ -1,14 +1,21 @@
-// swift-tools-version:4.1
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
-    name: "SwCrypt",
+    name: "SwCryptRSAPSS",
     products: [
-        .library(name: "SwCrypt", targets: ["SwCrypt"])
+        .library(name: "SwCryptRSAPSS",
+                 type: .static,
+                 targets: ["SwCryptRSAPSS"])
     ],
     targets: [
-        .target(name: "SwCrypt", path: "SwCrypt"),
-        .testTarget(name: "SwCryptTests", dependencies: ["SwCrypt"], path: "SwCryptTests")
+        .target(name: "SwCryptRSAPSS",
+                path: "SwCryptRSAPSS",
+                exclude: ["Info.plist"]),
+        .testTarget(name: "SwCryptRSAPSSTests",
+                    dependencies: ["SwCryptRSAPSS"],
+                    path: "SwCryptRSAPSSTests",
+                    exclude: ["Info.plist"])
     ]
 )
