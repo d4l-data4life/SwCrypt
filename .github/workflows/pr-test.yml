@@ -24,7 +24,9 @@ jobs:
     - name: Reset iOS simulators (Required to avoid tests failing problem)
       run: xcrun simctl erase all
     - name: test iOS
-      run: xcodebuild -scheme Data4LifeCryptoRSAPSS-Package -derivedDataPath build test
+      run: |
+           swift package generate-xcodeproj 
+           xcodebuild -scheme Data4LifeCryptoRSAPSS-Package -derivedDataPath build -enableCodeCoverage YES test
     - name: test macOS
       run: swift test
     - name: Install sonar scanner
